@@ -1,15 +1,31 @@
 <template>
-  <ContactsList :contacts="contactsList"></ContactsList>
+<div class="row">
+  <div class="col-6">
+    <ContactsList :contacts="contactsList"
+      @mouse-over-contact="updateHoveredContact"
+      @mouseout="hoveredContact = null"></ContactsList>
+  </div>
+  <div class="col-6">
+    <ContactDetails v-if="hoveredContact !== null" :contact="hoveredContact"></ContactDetails>
+  </div>
+</div>
 </template>
 
 <script>
 // @ is an alias to /src
 import ContactsList from '@/components/ContactsList.vue';
+import ContactDetails from '@/components/ContactDetails.vue';
 export default {
   name: "Home",
-  components: { ContactsList },
+  components: { ContactsList, ContactDetails },
+  methods: {
+    updateHoveredContact(contact) {
+      this.hoveredContact = contact;
+    }
+  },
   data() {
     return {
+      hoveredContact: null,
       contactsList: [
         {
           id: 1,
